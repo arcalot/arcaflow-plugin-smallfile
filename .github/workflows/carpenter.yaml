@@ -2,7 +2,7 @@ name: Carpentry
 on:
   push:
     branches:
-      - main
+      - add-gha
   pull_request:
 env:
   IMAGE_NAME: arcaflow-plugin-template-python
