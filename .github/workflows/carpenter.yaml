@@ -1,0 +1,24 @@
+name: Carpentry
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+env:
+  IMAGE_NAME: arcaflow-plugin-template-python
+  IMAGE_TAG: 'latest'
+  GITHUB_USERNAME: ${{ github.actor }}
+  GITHUB_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+  QUAY_USERNAME: ${{ secrets.QUAY_CARPENTER_USERNAME }}
+  QUAY_PASSWORD: ${{ secrets.QUAY_CARPENTER_PASSWORD }}
+jobs:
+  carpenter-build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout this project
+        uses: actions/checkout@v3
+      - name: carpenter build
+        uses: mfleader/arcaflow-plugin-image-builder@gh-container-axn
+        with:
+          args: build --build --push
