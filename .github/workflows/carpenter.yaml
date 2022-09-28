@@ -5,7 +5,7 @@ on:
       - add-gha
   pull_request:
 env:
-  IMAGE_NAME: arcaflow-plugin-template-python
+  IMAGE_NAME: arcaflow-plugin-smallfile
   IMAGE_TAG: 'latest'
   GITHUB_USERNAME: ${{ github.actor }}
   GITHUB_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
