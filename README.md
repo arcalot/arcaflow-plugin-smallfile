@@ -6,6 +6,13 @@ using the [Arcaflow python SDK](https://github.com/arcalot/arcaflow-plugin-sdk-p
 Supported smallfile parameters are defined in the `SmallfileParams` schema of the [smallfile_schema.py](smallfile_schema.py) file.
 You define your test parameters in a YAML file to be passed to the plugin command as shown in [smallfile-example.yaml](smallfile-example.yaml).
 
+## Image Building
+
+You can change this plugin's image version tag in
+`.github/workflows/carpenter.yaml` by editing the
+`IMAGE_TAG` variable, and pushing that change to the
+branch designated in that workflow.
+
 ## To run directly without the Arcaflow engine:
 
 In order to run the [arca-smallfile plugin](smallfile_plugin.py) follow these steps:
@@ -16,7 +23,7 @@ In order to run the [arca-smallfile plugin](smallfile_plugin.py) follow these st
 3. Run `cat smallfile-example.yaml | docker run -i arca-smallfile -f -`
 
 ### Native
-*Prerequisite: smallfile should already be installed on your system.* 
+*Prerequisite: smallfile should already be installed on your system.*
 
 1. Clone this repository
 2. Create a `venv` in the current directory with `python3 -m venv ./venv`

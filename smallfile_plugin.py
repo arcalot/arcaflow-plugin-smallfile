@@ -23,8 +23,8 @@ from smallfile_schema import (
 )
 
 
-# The following is a decorator (starting with @). We add this in
-# front of our function to define the metadata for our step.
+# The following is a decorator (starting with @). We add this in front of our
+# function to define the metadata for our step.
 @plugin.step(
     id="workload",
     name="smallfile workload",
@@ -35,22 +35,21 @@ def smallfile_run(
     params: WorkloadParams,
 ) -> typing.Tuple[str, typing.Union[WorkloadResults, WorkloadError]]:
     """
-    The function  is the implementation for the step.
-    It needs the decorator above to make it into a  step.
-    The type hints for the params are required.
+    The function  is the implementation for the step. It needs the decorator
+    above to make it into a  step. The type hints for the params are required.
 
     :param params:
 
-    :return: the string identifying which output it is,
-    as well the output structure
+    :return: the string identifying which output it is, as well the output
+        structure
     """
 
     smallfile_dir = "/plugin/smallfile"
     smallfile_yaml_file = tempfile.mkstemp()
     smallfile_out_file = tempfile.mkstemp()
 
-    # Copy all parameters from SmallfileParams directly
-    # for the smallfile CLI to use via YAML
+    # Copy all parameters from SmallfileParams directly for the smallfile CLI
+    #  to use via YAML
     print("==>> Importing workload parameters ...")
     smallfile_params = smallfile_schema.serialize(params.smallfile_params)
     with open(smallfile_yaml_file[1], "w") as file:

@@ -47,9 +47,9 @@ class YesNo(enum.Enum):
 @dataclass
 class SmallfileParams:
     """
-    The parameters in this schema will be passed through
-    to the smallfile_cli.py command unchanged.
-    These are documented with the smallfile project at
+    The parameters in this schema will be passed through to the
+    smallfile_cli.py command unchanged. These are documented with the
+    smallfile project at
     https://github.com/distributed-system-analysis/smallfile#how-to-specify-test
     """
 
