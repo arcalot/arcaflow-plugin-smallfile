@@ -3,7 +3,7 @@ name = "arcaflow-plugin-smallfile"
 version = "0.1.0"
 description = "arcaflow plugin for smallfile"
 authors = ["arcalot"]
-license = "Apache-2.0+GPL-2.0-only"
+license = "Apache-2.0"
 readme = "README.md"
 packages = [{include = "smallfile_plugin.py", from="."}]
 
