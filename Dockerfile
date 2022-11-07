@@ -30,7 +30,7 @@ ADD smallfile_plugin.py /plugin/
 ADD smallfile_schema.py /plugin/
 ADD test_smallfile_plugin.py /plugin/
 ADD smallfile-example.yaml /plugin/
-ADD https://raw.githubusercontent.com/arcalot/arcaflow-plugins/main/LICENSE /plugin/
+ADD https://raw.githubusercontent.com/arcalot/arcaflow-plugin-template-python/main/LICENSE /plugin/
 RUN chmod +x /plugin/smallfile_plugin.py /plugin/test_smallfile_plugin.py
 COPY --from=0 /smallfile/smallfile-${SMALLFILE_VERSION} /plugin/smallfile
 RUN chmod 777 /plugin/smallfile
