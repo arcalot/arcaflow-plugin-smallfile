@@ -1,0 +1,9 @@
+version: '3.2'
+services:
+  plugin:
+    image: quay.io/arcalot/arcaflow-plugin-smallfile
+    build: .
+    volumes:
+      - source: ./smallfile-example.yaml
+        target: /config/smallfile-example.yaml
+        type: bind
