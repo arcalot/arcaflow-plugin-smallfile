@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-
 import unittest
+
 import smallfile_schema
 from arcaflow_plugin_sdk import plugin
 

@@ -135,9 +135,7 @@ def smallfile_run(
 
     smallfile_rsptimes = []
     try:
-        with open(
-            "{}/stats-rsptimes.csv".format(rsptime_dir), newline=""
-        ) as csvfile:
+        with open("{}/stats-rsptimes.csv".format(rsptime_dir), newline="") as csvfile:
             rsptimes_csv = csv.DictReader(csvfile)
             for row in rsptimes_csv:
                 if (
