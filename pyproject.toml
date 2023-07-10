@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "arcaflow-plugin-smallfile"
+version = "0.1.0"
+description = ""
+authors = ["Arcalot Contributors"]
+license = "Apache-2.0+GPL-2.0-only"
+readme = "README.md"
+packages = [{include = "smallfile_plugin.py", from="./arcaflow_plugin_smallfile"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+arcaflow-plugin-sdk = "^0.10.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

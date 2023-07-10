@@ -123,9 +123,7 @@ class SmallfileParams:
         metadata={
             "id": "record-size",
             "name": "Record size (KB)",
-            "description": (
-                "Size in KB of data transferred in a single system call"
-            ),
+            "description": ("Size in KB of data transferred in a single system call"),
         },
     )
     xattr_size: typing.Optional[int] = field(
@@ -133,9 +131,7 @@ class SmallfileParams:
         metadata={
             "id": "xattr-size",
             "name": "xattr size (B)",
-            "description": (
-                "Size in bytes of extended attribute value in bytes"
-            ),
+            "description": ("Size in bytes of extended attribute value in bytes"),
         },
     )
     xattr_count: typing.Optional[int] = field(
@@ -177,9 +173,7 @@ class SmallfileParams:
         metadata={
             "id": "hash-into-dirs",
             "name": "Hash into directories",
-            "description": (
-                "Assign next file to a directory using a hash function"
-            ),
+            "description": ("Assign next file to a directory using a hash function"),
         },
     )
     same_dir: typing.Optional[YesNo] = field(
@@ -202,9 +196,7 @@ class SmallfileParams:
         default=None,
         metadata={
             "name": "Incompressible files",
-            "description": (
-                "Generate pure-random files that are not compressible"
-            ),
+            "description": ("Generate pure-random files that are not compressible"),
         },
     )
     cleanup_delay_usec_per_file: typing.Optional[int] = field(
@@ -232,9 +224,7 @@ class WorkloadParams:
         default=True,
         metadata={
             "name": "Cleanup files",
-            "description": (
-                "Whether to cleanup files and directories after a run"
-            ),
+            "description": ("Whether to cleanup files and directories after a run"),
         },
     )
 
@@ -259,8 +249,7 @@ class SmallfileOutputParams:
         metadata={
             "name": "Launch by daemon",
             "description": (
-                "Always 'false' because we don't use smallfile's daemon"
-                " feature"
+                "Always 'false' because we don't use smallfile's daemon" " feature"
             ),
         }
     )
@@ -318,9 +307,7 @@ class SmallfileOutputParams:
     hash_to_dir: YesNo = field(
         metadata={
             "name": "Hash into directories",
-            "description": (
-                "Assign next file to a directory using a hash function"
-            ),
+            "description": ("Assign next file to a directory using a hash function"),
         }
     )
     fsync_after_modify: YesNo = field(
@@ -372,9 +359,7 @@ class SmallfileOutputParams:
     xattr_size: int = field(
         metadata={
             "name": "xattr size (B)",
-            "description": (
-                "Size in bytes of extended attribute value in bytes"
-            ),
+            "description": ("Size in bytes of extended attribute value in bytes"),
         }
     )
     xattr_count: int = field(
@@ -534,15 +519,11 @@ class SmallfileOutputResults:
     startTime: float = field(
         metadata={"name": "Start time", "description": "Test start time"}
     )
-    status: str = field(
-        metadata={"name": "Status", "description": "Test run status"}
-    )
+    status: str = field(metadata={"name": "Status", "description": "Test run status"})
     # date: datetime
     # FIXME: Enable datetime data type
     # https://github.com/arcalot/arcaflow-plugin-sdk-python/issues/3
-    date: str = field(
-        metadata={"name": "Date", "description": "Test run date"}
-    )
+    date: str = field(metadata={"name": "Date", "description": "Test run date"})
     thread: typing.Dict[int, SmallfileOutputThread]
 
 
@@ -570,9 +551,7 @@ class SmallfileOutputRsptimes:
     max: float = field(
         metadata={"name": "Maximum", "description": "Maximum response time"}
     )
-    mean: float = field(
-        metadata={"name": "Mean", "description": "Mean response time"}
-    )
+    mean: float = field(metadata={"name": "Mean", "description": "Mean response time"})
     pctdev: float = field(
         metadata={
             "name": "Percent deviation",

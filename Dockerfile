@@ -1,49 +1,61 @@
+ARG package=arcaflow_plugin_smallfile
 ARG SMALLFILE_VERSION="1.1"
 
-#stage 1
-FROM quay.io/centos/centos:stream8
-
+# STAGE 1 -- Build module dependencies and run tests
+# The 'poetry' and 'coverage' modules are installed and verson-controlled in the
+# quay.io/arcalot/arcaflow-plugin-baseimage-python-buildbase image to limit drift
+FROM quay.io/arcalot/arcaflow-plugin-baseimage-python-buildbase:0.2.0 as build
+ARG package
 ARG SMALLFILE_VERSION
+ENV SMALLFILE_URL="https://github.com/distributed-system-analysis/smallfile/archive/refs/tags/${SMALLFILE_VERSION}.tar.gz"
 
-RUN dnf install -y wget
+# WORKDIR /smallfile
+# USER 1000
 
-RUN mkdir /smallfile
-RUN chmod 777 /smallfile
-WORKDIR /smallfile
-USER 1000
-RUN wget https://github.com/distributed-system-analysis/smallfile/archive/refs/tags/${SMALLFILE_VERSION}.tar.gz
-RUN tar xzf ${SMALLFILE_VERSION}.tar.gz
+RUN dnf install -y wget \
+ && mkdir /smallfile \
+ && chmod 777 /smallfile \
+ && wget -O - ${SMALLFILE_URL}  | tar xvz -C /smallfile
 
-#stage 2
-FROM quay.io/centos/centos:stream8
+COPY poetry.lock /app/
+COPY pyproject.toml /app/
 
-ARG SMALLFILE_VERSION
+# Convert the dependencies from poetry to a static requirements.txt file
+RUN python -m poetry install --without dev --no-root \
+ && python -m poetry export -f requirements.txt --output requirements.txt --without-hashes
 
-RUN dnf module -y install python39 && dnf install -y python39 python39-pip
+COPY ${package}/ /app/${package}
+COPY tests /app/${package}/tests
 
-RUN mkdir /plugin
-RUN chmod 777 /plugin
-ADD smallfile_plugin.py /plugin
-ADD smallfile_schema.py /plugin
-ADD test_smallfile_plugin.py /plugin
-ADD requirements.txt /plugin
-ADD smallfile-example.yaml /plugin
-ADD https://raw.githubusercontent.com/arcalot/arcaflow-plugins/main/LICENSE /plugin
-RUN chmod +x /plugin/smallfile_plugin.py /plugin/test_smallfile_plugin.py
-COPY --from=0 /smallfile/smallfile-${SMALLFILE_VERSION} /plugin/smallfile
-RUN chmod 777 /plugin/smallfile
-WORKDIR /plugin
+ENV PYTHONPATH /app/${package}
+WORKDIR /app/${package}
 
-RUN pip3 install -r /plugin/requirements.txt
+# Run tests and return coverage analysis
+RUN python -m coverage run tests/test_${package}.py \
+ && python -m coverage html -d /htmlcov --omit=/usr/local/*
 
-USER 1000
-RUN /plugin/test_smallfile_plugin.py
 
-ENTRYPOINT ["/plugin/smallfile_plugin.py"]
+# STAGE 2 -- Build final plugin image
+FROM quay.io/arcalot/arcaflow-plugin-baseimage-python-osbase:0.2.0
+ARG package
+
+COPY --from=build /smallfile/ /smallfile/
+COPY --from=build /app/requirements.txt /app/
+COPY --from=build /htmlcov /htmlcov/
+COPY LICENSE /app/
+COPY README.md /app/
+COPY ${package}/ /app/${package}
+
+# Install all plugin dependencies from the generated requirements.txt file
+RUN python -m pip install -r requirements.txt
+
+WORKDIR /app/${package}
+
+ENTRYPOINT ["python", "smallfile_plugin.py"]
 CMD []
 
 LABEL org.opencontainers.image.source="https://github.com/arcalot/arcaflow-plugin-smallfile"
-LABEL org.opencontainers.image.licenses="Apache-2.0"
+LABEL org.opencontainers.image.licenses="Apache-2.0+GPL-2.0-only"
 LABEL org.opencontainers.image.vendor="Arcalot project"
 LABEL org.opencontainers.image.authors="Arcalot contributors"
 LABEL org.opencontainers.image.title="Arcaflow Smallfile workload plugin"
