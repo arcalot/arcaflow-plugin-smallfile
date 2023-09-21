@@ -9,7 +9,7 @@ packages = [{include = "smallfile_plugin.py", from="./arcaflow_plugin_smallfile"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-arcaflow-plugin-sdk = "^0.10.3"
+arcaflow-plugin-sdk = "^0.11.0"
 
 [build-system]
 requires = ["poetry-core"]
